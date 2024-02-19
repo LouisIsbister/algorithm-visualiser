@@ -1,0 +1,3 @@
+Auckland	Hamilton
+Auckland	Tauranga
+Hamilton	Tauranga
