@@ -10,7 +10,7 @@ public class AppFrame extends JFrame {
 	private static AppPanel guiPanel = new AppPanel();
 
 	public AppFrame() {
-		setName("A Star visualiser");
+		setTitle("A Star visualiser");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		getContentPane().add(guiPanel);

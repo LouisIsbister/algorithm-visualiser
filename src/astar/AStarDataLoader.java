@@ -1,4 +1,4 @@
-package _main;
+package astar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class DataLoader {
+public class AStarDataLoader {
 
     // x min = 167
     // y min = 35
@@ -28,7 +28,7 @@ public class DataLoader {
     }
 
     private static void loadCities() throws FileNotFoundException {
-        File f = new File("src\\cities.txt");
+        File f = new File("src\\astar\\data\\cities.txt");
         Scanner scan = new Scanner(f);
         cities = new HashMap<>();
 
@@ -60,7 +60,7 @@ public class DataLoader {
     }
 
     private static void loadEdges() throws FileNotFoundException {
-        File f = new File("src\\edges.txt");
+        File f = new File("src\\astar\\data\\edges.txt");
         Scanner scan = new Scanner(f);
         edges = new ArrayList<>();
 

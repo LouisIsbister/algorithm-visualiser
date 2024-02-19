@@ -28,3 +28,5 @@ Turangi	-38.9889	175.8083
 Raglan	-37.9	174.65
 Te Anau	-45.4167	167.7167
 Whanganui	-39.9331	175.0286
+Masterton	-41.075	175.6672
+Fiordland	-46	167.2

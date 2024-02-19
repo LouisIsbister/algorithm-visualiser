@@ -1,16 +1,18 @@
 package _main;
 
-import java.util.List;
+import astar.AStar;
+import astar.AStarDataLoader;
 import gui.AppFrame;
 
 public class Main {
     
     public static void main(String[] args) {
-        DataLoader.load();
-        List<City> cities = DataLoader.cities();
-        List<Edge> edges = DataLoader.edges();
-
+        // A* visualiser
+        AStarDataLoader.load();
         AppFrame gui = new AppFrame();
+        
+        new AStar();
+
     }
 
 }

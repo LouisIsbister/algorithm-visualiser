@@ -1,0 +1,52 @@
+Auckland	Hamilton
+Auckland	Tauranga
+Auckland	Whangarei
+Auckland	Thames
+Auckland	Dargaville
+Auckland	Raglan
+Hamilton	Rotorua
+Hamilton	Thames
+Hamilton	Raglan
+Hamilton	Tauranga
+Tauranga	Rotorua
+Tauranga	Whakatane
+Kaitaia	Dargaville
+Kaitaia	Whangarei
+Dargaville	Whangarei
+Taupo	Hamilton
+Taupo	Turangi
+Taupo	Rotorua
+New Plymouth	Raglan
+New Plymouth	Whanganui
+Gisborne	Whakatane
+Napier	Taupo
+Napier	Gisborne
+Napier	Palmerston North
+Napier	Masterton
+Palmerston North	Whanganui
+Palmerston North	Waikanae
+Palmerston North	Turangi
+Palmerston North	Masterton
+Whanganui	Turangi
+Whanganui	Waikanae
+Wellington	Waikanae
+Wellington	Masterton
+Wellington	Blenheim
+Christchurch	Dunedin
+Christchurch	Blenheim
+Christchurch	Westport
+Christchurch	Greymouth
+Christchurch	Timaru
+Dunedin	Invercargill
+Dunedin	Alexandra
+Dunedin	Timaru
+Te Anau	Invercargill
+Te Anau	Alexandra
+Te Anau	Fiordland
+Te Anau	Wanaka
+Wanaka	Alexandra
+Wanaka	Greymouth
+Wanaka	Timaru
+Westport	Greymouth
+Westport	Nelson
+Nelson	Blenheim

@@ -1,4 +1,4 @@
-package _main;
+package astar;
 
 public record City(String name, int x, int y) {
     
