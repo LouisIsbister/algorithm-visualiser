@@ -1,4 +1,4 @@
-package gui;
+package astar.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,17 +6,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import astar.City;
+import astar.AStar;
 import astar.AStarDataLoader;
 import astar.Edge;
 
@@ -60,7 +58,10 @@ public class AppPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				confirmButton.requestFocusInWindow();
+				String startStr = start.getText();
+				String endStr = end.getText();
+
+				new AStar(startStr, endStr);
 			}
 			
 		});
@@ -102,7 +103,7 @@ public class AppPanel extends JPanel {
 			g2D.drawLine(e.start().x(), e.start().y(), e.end().x(), e.end().y());
 		}
 
-		for (City c : AStarDataLoader.cities()) {
+		for (City c : AStarDataLoader.cities().values()) {
 			g2D.setColor(Color.BLACK);
 			g2D.drawOval(c.x() - 5, c.y() - 5, 10, 10);
 

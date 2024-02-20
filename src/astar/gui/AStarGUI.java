@@ -1,15 +1,20 @@
-package gui;
+package astar.gui;
 
 import javax.swing.JFrame;
 
-public class AppFrame extends JFrame {
+import astar.AStarDataLoader;
+
+public class AStarGUI extends JFrame {
 
 	/**
 	 * the panel that displays the diagrams
 	 */
 	private static AppPanel guiPanel = new AppPanel();
 
-	public AppFrame() {
+	public AStarGUI() {
+		// load in the A* data
+		AStarDataLoader.load();
+
 		setTitle("A Star visualiser");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

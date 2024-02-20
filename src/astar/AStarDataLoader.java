@@ -74,15 +74,21 @@ public class AStarDataLoader {
 
             City city1 = cities.get(arr[0]);
             City city2 = cities.get(arr[1]);
-            Edge e = new Edge(city1, city2, city1.distanceTo(city2));
-            edges.add(e);
+
+            Edge e1 = new Edge(city1, city2, city1.distanceTo(city2));
+            Edge e2 = new Edge(city2, city1, city2.distanceTo(city1));
+            
+            city1.addEdge(e1);
+            city2.addEdge(e2);
+            edges.add(e1);
+            edges.add(e2);
         }
 
         scan.close();
     }
 
-    public static List<City> cities() {
-        return cities.values().parallelStream().toList();
+    public static Map<String, City> cities() {
+        return cities;
     }
 
     public static List<Edge> edges() {
