@@ -25,4 +25,8 @@ public class AStarGUI extends JFrame {
 		setVisible(true);
 	}
 
+	// public static void updateViewport(City c) {
+	// 	guiPanel.updatePathRender(c);
+	// }
+
 }

@@ -10,7 +10,7 @@ public record Edge(City start, City end, double length) implements Comparable<Ed
     
     @Override
     public String toString() {
-        return start + " -> " + end + " : " + length;
+        return "[" + start + " -> " + end + " : " + length + "]";
     }
 
 }

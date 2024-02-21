@@ -10,13 +10,10 @@ import java.util.Set;
 
 public class AStar {
 
-    public AStar(String start, String end) {
-        Map<String, City> cities = AStarDataLoader.cities();
+    private static Map<City, Edge> backptrs;
 
-        if (cities.get(start) == null || cities.get(end) == null)
-            return;
-
-        System.out.println(findShortestPath(cities.get(start), cities.get(end)));
+    public static Map<City, Edge> getBackptrs() {
+        return backptrs;
     }
 
     public static List<City> findShortestPath(City start, City goal) {
@@ -24,8 +21,8 @@ public class AStar {
             return null;
 
         Set<City> visited = new HashSet<>();
+        backptrs = new HashMap<>();
         PriorityQueue<PathItem> queue = new PriorityQueue<>();
-        HashMap<City, Edge> backpointers = new HashMap<>();
 
         PathItem pI = new PathItem(start, null, 0, start.distanceTo(goal));
         queue.add(pI);
@@ -34,14 +31,13 @@ public class AStar {
             PathItem p = queue.poll();
             City curStop = p.city();
 
-            System.out.println(curStop);
-
             if (!visited.contains(curStop)) {
                 visited.add(curStop);
-                backpointers.put(curStop, p.edge());
-                if (curStop == goal) {
-                    return reconstructPath(start, goal, backpointers);
-                }
+                backptrs.put(curStop, p.edge());
+
+                if (curStop == goal)
+                    return reconstructPath(start, goal);
+                
                 for (Edge e : curStop.edges()) {
                     City to = e.end();
                     if (!visited.contains(to)) {
@@ -56,13 +52,16 @@ public class AStar {
         return new ArrayList<City>();
     }
 
-    private static List<City> reconstructPath(City start, City goal, HashMap<City, Edge> backpointers) {
-        List<City> res = new ArrayList<>();
-        res.add(start);
-        City cptr = goal;
+    private static List<City> reconstructPath(City start, City goal) {
+        if (start == goal)
+            return List.of(start);
 
+        List<City> res = new ArrayList<>();
+        res.add(goal);
+        City cptr = goal;
+        // traverse backptrs as the 'end' city
         do {
-            Edge e = backpointers.get(cptr);
+            Edge e = backptrs.get(cptr);
             res.add(e.start());
             cptr = e.start();
         } while (cptr != start);
