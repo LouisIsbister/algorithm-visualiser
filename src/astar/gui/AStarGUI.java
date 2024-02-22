@@ -9,7 +9,7 @@ public class AStarGUI extends JFrame {
 	/**
 	 * the panel that displays the diagrams
 	 */
-	private static AppPanel guiPanel = new AppPanel();
+	private static AStarGraphic visualiser = new AStarGraphic();
 
 	public AStarGUI() {
 		// load in the A* data
@@ -18,15 +18,11 @@ public class AStarGUI extends JFrame {
 		setTitle("A Star visualiser");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		getContentPane().add(guiPanel);
+		getContentPane().add(visualiser);
 
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-
-	// public static void updateViewport(City c) {
-	// 	guiPanel.updatePathRender(c);
-	// }
 
 }

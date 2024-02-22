@@ -95,22 +95,4 @@ public class AStarDataLoader {
         return edges;
     }
 
-    // cities.sort(new Comparator<City>() {
-    // @Override
-    // public int compare(City o1, City o2) {
-    // return Double.compare(o2.y(), o1.y());
-    // }
-    // });
-
-    // for (City c : cities) System.out.println(c);
-    // System.out.println("\n");
-
-    // cities.sort(new Comparator<City>() {
-    // @Override
-    // public int compare(City o1, City o2) {
-    // return Double.compare(o2.y(), o1.y());
-    // }
-    // });
-    // for (City c : cities) System.out.println(c);
-
 }

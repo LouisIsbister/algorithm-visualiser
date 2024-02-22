@@ -11,9 +11,6 @@ import java.awt.event.FocusListener;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Map.Entry;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -29,7 +26,7 @@ import astar.Edge;
 /**
  * panel that displays the Venn diagrams
  */
-public class AppPanel extends JPanel {
+public class AStarGraphic extends JPanel {
 
 	public static final int WIDTH = 625;
 	public static final int HEIGHT = 700;
@@ -39,20 +36,20 @@ public class AppPanel extends JPanel {
 
 	private JButton confirmButton = new JButton("Confirm Selection");
 
-	private List<City> astarPath;
+	private List<City> shortestPath;
 
 	private Timer timer;
 
-	public AppPanel() {
+	public AStarGraphic() {
 		setLayout(null);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setOpaque(true);
 
 		createUserInterface();
-
-		add(confirmButton);
+		
 		add(start);
 		add(end);
+		add(confirmButton);
 	}
 
 	private void createUserInterface() {
@@ -71,16 +68,15 @@ public class AppPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				pathRender = new ArrayList<>();
 				retraceRender = new ArrayList<>();
-				history = new ArrayDeque<>();
-				cityptr = null;
+				countptr = 0;
 
 				String startStr = start.getText();
 				String endStr = end.getText();
 
 				Map<String, City> cities = AStarDataLoader.cities();
-				astarPath = AStar.findShortestPath(cities.get(startStr), cities.get(endStr));
+				shortestPath = AStar.findShortestPath(cities.get(startStr), cities.get(endStr));
 
-				visualise(cities.get(startStr), cities.get(endStr), AStar.getBackptrs());
+				visualise(cities.get(startStr), cities.get(endStr), AStar.allPathsTaken());
 			}
 
 		});
@@ -91,43 +87,19 @@ public class AppPanel extends JPanel {
 
 	private List<City> pathRender = new ArrayList<>();
 
-	private City cityptr = null;
+	private List<City> retraceRender = new ArrayList<>();
 
-	private Queue<City> history = new ArrayDeque<>();
+	private int countptr = 0;
 
-	private void visualise(City start, City goal, Map<City, Edge> backptrs) {
-		cityptr = start;
-		history.add(cityptr);
-		
-		// Initialize the Timer in your constructor or initialization block
+	private void visualise(City start, City goal, List<City> allPathsTaken) {
 		timer = new Timer(500, event -> {
-			Edge e = null;
-			City cityrm = null;
+			City c = allPathsTaken.get(countptr);
+			pathRender.add(c);
 
-			for (Entry<City, Edge> entry : backptrs.entrySet()) {
-				Edge edge = entry.getValue();
-				if (edge != null && cityptr == edge.start()) {
-					e = edge;
-					cityrm = entry.getKey();
-				}
-			}
-
-			if (cityrm != null) {
-				backptrs.remove(cityrm, e);
-				
-				history.add(cityptr);
-				pathRender.add(e.start());
-				cityptr = e.end();
-			}
-			else { // then there existed no edge where the cityptr was the start of the edge
-				pathRender.add(cityptr);
-				cityptr = history.poll();
-			}
-
+			countptr++;
 			repaint();
 
-			if (cityptr == goal) {
-				pathRender.add(goal);
+			if (c == goal) {
 				timer.stop();
 				retracePath();
 			}
@@ -136,25 +108,20 @@ public class AppPanel extends JPanel {
 		timer.start();
 	}
 
-	private List<City> retraceRender = new ArrayList<>();
-
-	private int pathPtr;
-
 	private void retracePath() {
 		retraceRender = new ArrayList<>();
-		pathPtr = 0;
+		countptr = 0;
 		
 		timer = new Timer(500, event -> {
-			City c = astarPath.get(pathPtr);
+			City c = shortestPath.get(countptr);
 			retraceRender.add(c);
-			pathPtr++;
+			countptr++;
 
 			repaint();
-			if (pathPtr == astarPath.size())
+			if (countptr == shortestPath.size())
 				timer.stop();
 		});
 
-		// Start the timer when needed
 		timer.start();
 	}
 

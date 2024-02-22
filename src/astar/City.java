@@ -39,7 +39,6 @@ public class City {
     }
 
     public double distanceTo(City other) {
-
         double a = Math.abs(other.y - this.y);
         double b = Math.abs(other.x - this.x);
 

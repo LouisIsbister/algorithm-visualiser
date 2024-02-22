@@ -10,9 +10,9 @@ public class PathItem implements Comparable<PathItem> {
     
     public PathItem(City c, Edge e, double cpc, double ec) { 
         city = c;
-        edge = e; 
-        currentPathCost = cpc; 
-        estimatedCost = ec; 
+        edge = e;
+        currentPathCost = cpc;
+        estimatedCost = ec;
     }
     
     public City city() {
