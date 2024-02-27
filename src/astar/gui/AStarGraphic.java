@@ -5,10 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -31,95 +27,97 @@ public class AStarGraphic extends JPanel {
 	public static final int WIDTH = 625;
 	public static final int HEIGHT = 700;
 
-	private JTextField start = new JTextField("Enter start location");
-	private JTextField end = new JTextField("Enter end location");
+	private JTextField start = new JTextField();
+	private JTextField end = new JTextField();
 
 	private JButton confirmButton = new JButton("Confirm Selection");
-
-	private List<City> shortestPath;
 
 	private Timer timer;
 
 	public AStarGraphic() {
+		
 		setLayout(null);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setOpaque(true);
 
 		createUserInterface();
-		
-		add(start);
-		add(end);
-		add(confirmButton);
 	}
 
 	private void createUserInterface() {
 		start.setBounds(10, 6, 150, 24);
 		end.setBounds(10, 36, 150, 24);
-		start.setForeground(Color.GRAY);
-		end.setForeground(Color.GRAY);
-
-		addTextFieldListener(start, "Enter start location");
-		addTextFieldListener(end, "Enter end location");
 
 		confirmButton.setBounds(10, 66, 150, 24);
-		confirmButton.addActionListener(new ActionListener() {
+		confirmButton.addActionListener((ActionEvent e) -> {
+			if (timer != null)
+				timer.stop();
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pathRender = new ArrayList<>();
-				retraceRender = new ArrayList<>();
-				countptr = 0;
+			String startStr = start.getText();
+			String endStr = end.getText();
 
-				String startStr = start.getText();
-				String endStr = end.getText();
+			Map<String, City> cities = AStarDataLoader.cities();
+			City start = cities.get(startStr);
+			City end = cities.get(endStr);
 
-				Map<String, City> cities = AStarDataLoader.cities();
-				shortestPath = AStar.findShortestPath(cities.get(startStr), cities.get(endStr));
-
-				visualise(cities.get(startStr), cities.get(endStr), AStar.allPathsTaken());
-			}
-
+			visualise(start, end,
+				AStar.findShortestPath(start, end), 
+				AStar.allPathsTaken());
 		});
 
+		add(start);
+		add(end);
+		add(confirmButton);
 	}
 
-	// ----- updating the visualiser -----
+	// ----- visualiser -----
 
 	private List<City> pathRender = new ArrayList<>();
 
 	private List<City> retraceRender = new ArrayList<>();
 
-	private int countptr = 0;
+	/**
+	 * shortest path list pointer
+	 */
+	private int spPtr;
 
-	private void visualise(City start, City goal, List<City> allPathsTaken) {
-		timer = new Timer(500, event -> {
-			City c = allPathsTaken.get(countptr);
-			pathRender.add(c);
+	/**
+	 * all paths taken list pointer
+	 */
+	private int aptPtr;
 
-			countptr++;
-			repaint();
-
-			if (c == goal) {
-				timer.stop();
-				retracePath();
-			}
-		});
-
-		timer.start();
-	}
-
-	private void retracePath() {
+	/**
+	 * This method renders the A* algorithm in the same order that occurred. i.e. it starts
+	 * by sequentially adding all the paths taken to the pathRender list which is highlighted
+	 * on that map by red cities. Once it found the goal / rendered all the paths it will
+	 * sequentially render the cities that form the shortest path that was taken. 
+	 * 
+	 * @param start of the path.
+	 * @param goal end of the path.
+	 * @param shortestPath shortest path between start -> goal.
+	 * @param allPathsTaken all the paths taken before finding the shortest.
+	 */
+	private void visualise(City start, City goal, List<City> shortestPath, List<City> allPathsTaken) {
+		pathRender = new ArrayList<>();
 		retraceRender = new ArrayList<>();
-		countptr = 0;
+		spPtr = 0;
+		aptPtr = 0;
 		
 		timer = new Timer(500, event -> {
-			City c = shortestPath.get(countptr);
-			retraceRender.add(c);
-			countptr++;
+			City c = allPathsTaken.get(aptPtr);
+			pathRender.add(c);
 
+			if (aptPtr < allPathsTaken.size() - 1) {
+				aptPtr++;
+			}
+			else {
+				c = shortestPath.get(spPtr);
+				retraceRender.add(c);
+				spPtr++;
+
+				if (spPtr == shortestPath.size())
+					timer.stop();
+			}
 			repaint();
-			if (countptr == shortestPath.size())
-				timer.stop();
 		});
 
 		timer.start();
@@ -157,27 +155,5 @@ public class AStarGraphic extends JPanel {
 			g2D.setColor(Color.BLUE);
 			g2D.fillOval(c.x() - 5, c.y() - 5, 10, 10);
 		}
-	}
-
-	private void addTextFieldListener(JTextField tf, String msg) {
-		tf.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				// When the text field gains focus, clear the background text
-				if (tf.getText().equals(msg)) {
-					tf.setText("");
-					tf.setForeground(Color.BLACK);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				// When the text field loses focus, set the background text if it's empty
-				if (tf.getText().isEmpty()) {
-					tf.setText(msg);
-					tf.setForeground(Color.GRAY);
-				}
-			}
-		});
 	}
 }

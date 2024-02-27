@@ -12,12 +12,11 @@ public class AStarGUI extends JFrame {
 	private static AStarGraphic visualiser = new AStarGraphic();
 
 	public AStarGUI() {
-		// load in the A* data
-		AStarDataLoader.load();
-
-		setTitle("A Star visualiser");
+		super("A Star visualiser");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// load in the A* data once
+		AStarDataLoader.load();
 		getContentPane().add(visualiser);
 
 		pack();
