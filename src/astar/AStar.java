@@ -14,7 +14,7 @@ public class AStar {
      * Map of backpointers where each key corresponds to the edge
      * that was traversed to get that city  
      */
-    private static Map<City, Edge> backptrs;
+    private static Map<City, Edge> backPtrs;
 
     /** 
      * A list used for storing every all the cities the algorithm 
@@ -41,7 +41,7 @@ public class AStar {
         if (start == null || goal == null)
             return List.of();
  
-        backptrs = new HashMap<>();
+        backPtrs = new HashMap<>();
         pathsTaken = new ArrayList<>();
 
         Set<City> visited = new HashSet<>();
@@ -59,7 +59,7 @@ public class AStar {
 
             if (!visited.contains(city)) {
                 visited.add(city);
-                backptrs.put(city, p.edge());
+                backPtrs.put(city, p.edge());
 
                 if (city == goal)
                     return reconstructPath(start, goal);
@@ -98,7 +98,7 @@ public class AStar {
         City cptr = goal;
         // traverse backptrs as the 'end' city
         do {
-            Edge e = backptrs.get(cptr);
+            Edge e = backPtrs.get(cptr);
             res.add(e.start());
             cptr = e.start();
         } while (cptr != start);

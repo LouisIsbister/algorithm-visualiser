@@ -1,10 +1,10 @@
-package astar.gui;
+package astar;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
+import java.awt.Insets;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -14,18 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import astar.City;
-import astar.AStar;
-import astar.AStarDataLoader;
-import astar.Edge;
-
 /**
  * panel that displays the Venn diagrams
  */
-public class AStarGraphic extends JPanel {
-
-	public static final int WIDTH = 625;
-	public static final int HEIGHT = 700;
+public class AStarVisualiser extends JPanel {
 
 	private JTextField start = new JTextField();
 	private JTextField end = new JTextField();
@@ -34,11 +26,11 @@ public class AStarGraphic extends JPanel {
 
 	private Timer timer;
 
-	public AStarGraphic() {
-		
+	public AStarVisualiser() {
 		setLayout(null);
-		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setPreferredSize(new Dimension(_main.GUI.WIDTH, _main.GUI.HEIGHT));
 		setOpaque(true);
+		setBounds(0, 0, _main.GUI.WIDTH, _main.GUI.HEIGHT);
 
 		createUserInterface();
 	}
@@ -48,7 +40,7 @@ public class AStarGraphic extends JPanel {
 		end.setBounds(10, 36, 150, 24);
 
 		confirmButton.setBounds(10, 66, 150, 24);
-		confirmButton.addActionListener((ActionEvent e) -> {
+		confirmButton.addActionListener((e) -> {
 			if (timer != null)
 				timer.stop();
 
@@ -102,7 +94,7 @@ public class AStarGraphic extends JPanel {
 		spPtr = 0;
 		aptPtr = 0;
 		
-		timer = new Timer(500, event -> {
+		timer = new Timer(500, e -> {
 			City c = allPathsTaken.get(aptPtr);
 			pathRender.add(c);
 
@@ -131,6 +123,9 @@ public class AStarGraphic extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
+		g2D.setColor(getBackground());
+    	g2D.fillRect(0, 0, getWidth(), getHeight());
+		g2D.setColor(Color.BLACK);
 
 		for (Edge e : AStarDataLoader.edges()) {
 			g2D.drawLine(e.start().x(), e.start().y(), e.end().x(), e.end().y());
@@ -155,5 +150,10 @@ public class AStarGraphic extends JPanel {
 			g2D.setColor(Color.BLUE);
 			g2D.fillOval(c.x() - 5, c.y() - 5, 10, 10);
 		}
+	}
+
+	public void stop() {
+		if (timer != null) 
+			timer.stop();
 	}
 }
