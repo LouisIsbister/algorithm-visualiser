@@ -49,7 +49,7 @@ public class TreeVisualiser extends JPanel {
         q.add(Tree.root());
         
         int xwid = _main.GUI.WIDTH;
-        int yfact = _main.GUI.HEIGHT / Tree.depth();
+        int yfact = _main.GUI.HEIGHT / Tree.treeDepth();
         
         while (!q.isEmpty()) {
             Node n = q.poll();

@@ -28,10 +28,10 @@ public class DFS {
     private static List<Node> postOrder(Node root, List<Node> ret) {
         if (root == null) 
             return ret;
-
+        
+        for (Node c: root.children())
+            postOrder(c, ret);
         ret.add(root);
-        for (int i = root.children().size() - 1; i >= 0; i--)
-            postOrder(root.children().get(i), ret);
 
         return ret;
     }
