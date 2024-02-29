@@ -57,7 +57,7 @@ public class Tree {
 
     public static int treeDepth() {
         return nodes.values().stream()
-            .max((Node n1, Node n2)-> {
+            .max((n1, n2)-> {
                 return n1.level() - n2.level();
             })
             .get()
@@ -66,12 +66,12 @@ public class Tree {
 
     public static int indexOf(Node n) {
         if (n == null)
-            return 1;
+            return 0;
 
         List<Node> ns = nodes.values().stream()
             .filter(node-> node.level() == n.level())
             .collect(Collectors.toList());
-        ns.sort((Node o1, Node o2) -> {
+        ns.sort((o1, o2) -> {
             return o1.name().compareTo(o2.name());
         });
 
