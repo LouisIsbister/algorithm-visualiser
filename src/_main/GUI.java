@@ -1,13 +1,16 @@
 package _main;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import astar.AStarVisualiser;
+import shunting_yard.ShuntingYardVisualiser;
 import tree_traversals.TreeVisualiser;
 
 public class GUI extends JFrame {
@@ -17,6 +20,7 @@ public class GUI extends JFrame {
 
 	private final AStarVisualiser aStarVisualiser = new AStarVisualiser();
 	private final TreeVisualiser treeVisualiser = new TreeVisualiser();
+	private final ShuntingYardVisualiser shuntingYardVis = new ShuntingYardVisualiser();
 
 	public GUI() {
 		super("Algorithm visualiser");
@@ -36,29 +40,27 @@ public class GUI extends JFrame {
 		JMenu menus = new JMenu("Algoithms");
 		JMenuItem astar = new JMenuItem("AStar (A*) Algorithm");
 		JMenuItem trees = new JMenuItem("Tree Traversal Algorithms");
+		JMenuItem sya = new JMenuItem("Shunting Yard Math Evaluation");
 		
 		menus.add(astar);
 		menus.add(trees);
+		menus.add(sya);
 		menu.add(menus);
 		setJMenuBar(menu);
-
-		astar.addActionListener((e) -> {
-			aStarVisualiser.stop();
-			treeVisualiser.stop();
-			getContentPane().removeAll();
-			getContentPane().add(aStarVisualiser);
-			revalidate();
-			repaint();
-		});
 		
-		trees.addActionListener((e) -> {
+		addActionList(astar, aStarVisualiser);
+		addActionList(trees, treeVisualiser);
+		addActionList(sya, shuntingYardVis);
+	}
+
+	private void addActionList(JMenuItem menu, JPanel p) {
+		menu.addActionListener((e) -> {
 			aStarVisualiser.stop();
 			treeVisualiser.stop();
 			getContentPane().removeAll();
-			getContentPane().add(treeVisualiser);
+			getContentPane().add(p);
 			revalidate();
 			repaint();
 		});
-
 	}
 }

@@ -10,7 +10,6 @@ public class DFS {
     public static List<Node> performDFS(Order o) {
         List<Node> ret = new ArrayList<>();
         Node root = Tree.root();
-        // Queue<Node> q = new ArrayDeque<>();
         return o == Order.PREORDER ? preOrder(root, ret): postOrder(root, ret);
     }
 
