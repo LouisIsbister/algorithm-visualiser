@@ -1,13 +1,16 @@
 package _main;
 
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import astar.AStarVisualiser;
 import shunting_yard.ShuntingYardVisualiser;
@@ -63,4 +66,28 @@ public class GUI extends JFrame {
 			repaint();
 		});
 	}
+
+	public static void diplayError(String msg) {
+		JDialog dialog = new JDialog();
+		JPanel panel = new JPanel();
+		panel.setVisible(true);
+		panel.setPreferredSize(new Dimension(450, 300));
+		panel.setLayout(null);
+
+		JLabel label = new JLabel(msg);
+		label.setFont(new java.awt.Font("Monospaced", 1, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(0, 0, 450, 200);
+
+		JButton contButton = new JButton("Continue");
+		contButton.addActionListener(e-> dialog.dispose());
+		contButton.setBounds(175, 200, 100, 50);
+
+		panel.add(contButton);
+		panel.add(label);
+		dialog.add(panel);
+		dialog.pack();
+		dialog.setLocationRelativeTo(null);
+		dialog.setVisible(true);
+	} 
 }

@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
+import _main.GUI;
+
 /**
  * panel that displays the Venn diagrams
  */
@@ -50,9 +52,14 @@ public class AStarVisualiser extends JPanel {
 			City start = cities.get(startStr);
 			City end = cities.get(endStr);
 
-			visualise(start, end,
-				AStar.findShortestPath(start, end), 
-				AStar.allPathsTaken());
+			try {
+				visualise(start, end,
+					AStar.findShortestPath(start, end), 
+					AStar.allPathsTaken());
+			} catch(IllegalArgumentException ex) {
+				clearPathRenderers();
+				GUI.diplayError(ex.getMessage());
+			}
 		});
 
 		add(start);
@@ -112,6 +119,11 @@ public class AStarVisualiser extends JPanel {
 		});
 
 		timer.start();
+	}
+
+	private void clearPathRenderers() {
+		pathRender.clear();
+		retraceRender.clear();
 	}
 
 	/**

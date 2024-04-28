@@ -27,7 +27,7 @@ public class AStar {
      * @return each visited city (in order)
      */
     public static List<City> allPathsTaken() {
-        return pathsTaken;
+        return pathsTaken == null ? List.of() : pathsTaken;
     }
 
     /**
@@ -39,7 +39,9 @@ public class AStar {
      */
     public static List<City> findShortestPath(City start, City goal) {
         if (start == null || goal == null)
-            return List.of();
+            throw new IllegalArgumentException("<html><center>Start or goal have not been resolved."
+                + "<br>Cannot perform search.</center></html>"); 
+        
  
         backPtrs = new HashMap<>();
         pathsTaken = new ArrayList<>();
@@ -50,8 +52,8 @@ public class AStar {
         PathItem pI = new PathItem(start, null, 0, start.distanceTo(goal));
         queue.add(pI);
         while (!queue.isEmpty()) {
-            PathItem p = queue.poll();
-            City city = p.city();
+            PathItem pi = queue.poll();
+            City city = pi.city();
 
             // ---- doesn't affect the algorithm itself
             pathsTaken.add(city);
@@ -59,7 +61,7 @@ public class AStar {
 
             if (!visited.contains(city)) {
                 visited.add(city);
-                backPtrs.put(city, p.edge());
+                backPtrs.put(city, pi.edge());
 
                 if (city == goal)
                     return reconstructPath(start, goal);
@@ -67,13 +69,13 @@ public class AStar {
                 for (Edge e : city.edges()) {
                     City to = e.end();
                     if (!visited.contains(to)) {
-                        double distToNeighbour = p.cost() + e.length();
+                        double currentPathDistance = pi.pathCost() + e.length();
 
                         // variable allows the algorithm to traverse multiple 
                         // paths/options instead of just one that may be inaccurate 
-                        double estimatedPathCost = distToNeighbour + to.distanceTo(goal);
-                        PathItem pi = new PathItem(to, e, distToNeighbour, estimatedPathCost);
-                        queue.add(pi);
+                        double estimatedPathCost = currentPathDistance + to.distanceTo(goal);
+                        PathItem newItem = new PathItem(to, e, currentPathDistance, estimatedPathCost);
+                        queue.add(newItem);
                     }
                 }
             }

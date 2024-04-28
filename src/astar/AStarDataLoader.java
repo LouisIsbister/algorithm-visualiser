@@ -52,7 +52,7 @@ public class AStarDataLoader {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 scan.close();
-                return;
+                System.exit(1);
             }
         }
 

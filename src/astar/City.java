@@ -1,7 +1,6 @@
 package astar;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class City {
 
@@ -9,7 +8,7 @@ public class City {
     private int x;
     private int y;
 
-    private Set<Edge> edges;
+    private HashSet<Edge> edges;
 
     public City(String name, int x, int y) {
         this.name = name;
@@ -34,7 +33,7 @@ public class City {
         return y;
     }
 
-    public Set<Edge> edges() {
+    public HashSet<Edge> edges() {
         return edges;
     }
 
