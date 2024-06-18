@@ -1,4 +1,4 @@
-package tree_traversals;
+package treetraversals;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

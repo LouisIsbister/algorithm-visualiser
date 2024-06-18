@@ -1,4 +1,4 @@
-package _main;
+package controller;
 
 import java.awt.Dimension;
 
@@ -13,8 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import astar.AStarVisualiser;
-import shunting_yard.ShuntingYardVisualiser;
-import tree_traversals.TreeVisualiser;
+import treetraversals.TreeVisualiser;
 
 public class GUI extends JFrame {
 
@@ -23,7 +22,6 @@ public class GUI extends JFrame {
 
 	private final AStarVisualiser aStarVisualiser = new AStarVisualiser();
 	private final TreeVisualiser treeVisualiser = new TreeVisualiser();
-	private final ShuntingYardVisualiser shuntingYardVis = new ShuntingYardVisualiser();
 
 	public GUI() {
 		super("Algorithm visualiser");
@@ -53,7 +51,6 @@ public class GUI extends JFrame {
 		
 		addActionList(astar, aStarVisualiser);
 		addActionList(trees, treeVisualiser);
-		addActionList(sya, shuntingYardVis);
 	}
 
 	private void addActionList(JMenuItem menu, JPanel p) {

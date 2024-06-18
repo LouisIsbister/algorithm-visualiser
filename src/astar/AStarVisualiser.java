@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import _main.GUI;
+import controller.GUI;
 
 /**
  * panel that displays the Venn diagrams
@@ -29,9 +29,9 @@ public class AStarVisualiser extends JPanel {
 
 	public AStarVisualiser() {
 		setLayout(null);
-		setPreferredSize(new Dimension(_main.GUI.WIDTH, _main.GUI.HEIGHT));
+		setPreferredSize(new Dimension(controller.GUI.WIDTH, controller.GUI.HEIGHT));
 		setOpaque(true);
-		setBounds(0, 0, _main.GUI.WIDTH, _main.GUI.HEIGHT);
+		setBounds(0, 0, controller.GUI.WIDTH, controller.GUI.HEIGHT);
 
 		createUserInterface();
 	}

@@ -1,4 +1,4 @@
-package tree_traversals;
+package treetraversals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Tree {
     
@@ -57,23 +56,20 @@ public class Tree {
 
     public static int treeDepth() {
         return nodes.values().stream()
-            .max((n1, n2)-> {
-                return n1.level() - n2.level();
-            })
-            .get()
-            .level();
+            .map(n->n.level())
+            .max((n1, n2)-> n1 - n2)
+            .orElse(0);
     }
 
-    public static int indexOf(Node n) {
+    public static int indexOnLevel(Node n) {
         if (n == null)
             return 0;
 
         List<Node> ns = nodes.values().stream()
             .filter(node-> node.level() == n.level())
-            .collect(Collectors.toList());
-        ns.sort((o1, o2) -> {
-            return o1.name().compareTo(o2.name());
-        });
+            .toList();
+
+        ns.sort((o1, o2) -> o1.name().compareTo(o2.name()));
 
         return ns.indexOf(n) + 1;
     } 

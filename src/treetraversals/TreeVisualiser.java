@@ -1,4 +1,4 @@
-package tree_traversals;
+package treetraversals;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import tree_traversals.DFS.Order;
+import treetraversals.DFS.Order;
 
 public class TreeVisualiser extends JPanel {
     
@@ -29,9 +29,9 @@ public class TreeVisualiser extends JPanel {
 
     public TreeVisualiser() {
         setLayout(null);
-		setPreferredSize(new Dimension(_main.GUI.WIDTH, _main.GUI.HEIGHT));
+		setPreferredSize(new Dimension(controller.GUI.WIDTH, controller.GUI.HEIGHT));
 		setOpaque(true);
-        setBounds(0, 0, _main.GUI.WIDTH, _main.GUI.HEIGHT);
+        setBounds(0, 0, controller.GUI.WIDTH, controller.GUI.HEIGHT);
         //setVisible(true);
 
         setNodeCoords();
@@ -48,19 +48,17 @@ public class TreeVisualiser extends JPanel {
         Queue<Node> q = new ArrayDeque<>();
         q.add(Tree.root());
         
-        int xwid = _main.GUI.WIDTH;
-        int yfact = _main.GUI.HEIGHT / Tree.treeDepth();
+        int xwid = controller.GUI.WIDTH;
+        int yfact = controller.GUI.HEIGHT / Tree.treeDepth();
         
         while (!q.isEmpty()) {
             Node n = q.poll();
 
-            int x = (xwid / (1 + Tree.totalNodesOnLevel(n.level()))) * Tree.indexOf(n);
+            int x = (xwid / (1 + Tree.totalNodesOnLevel(n.level()))) * Tree.indexOnLevel(n);
             int y = yfact * (n.level() - 1) + 50;
             n.setCoordinates(x, y);
             
-            for (Node c :n.children()) {
-                q.add(c);
-            }
+            n.children().stream().forEach(e -> q.add(e));
         }
     }
 
